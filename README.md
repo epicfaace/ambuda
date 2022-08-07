@@ -9,7 +9,7 @@ tradition radically accessible. Our archive is hosted at https://ambuda.org.
 This repository contains Ambuda's core code. It also includes database seeding
 scripts, which will automatically pull external data sources as needed.
 
-
+ 
 Documentation
 -------------
 
