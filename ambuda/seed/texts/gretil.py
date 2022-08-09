@@ -22,30 +22,31 @@ class Spec:
     filename: str
 
 
-REPO = "https://github.com/ambuda-project/gretil.git"
+REPO = "https://github.com/epicfaace/gretil.git"
 PROJECT_DIR = Path(__file__).resolve().parents[3]
 DATA_DIR = PROJECT_DIR / "data" / "ambuda-gretil"
 #: Slug to use for texts that have only one section.
 SINGLE_SECTION_SLUG = "all"
 
 ALLOW = [
-    Spec("amarushatakam", "amaruzakatam", "sa_amaru-amaruzataka.xml"),
-    Spec("kumarasambhavam", "kumArasambhavam", "sa_kAlidAsa-kumArasaMbhava.xml"),
-    Spec("raghuvamsham", "raghuvaMzam", "sa_kAlidAsa-raghuvaMza.xml"),
-    Spec("kiratarjuniyam", "kirAtArjunIyam", "sa_bhAravi-kirAtArjunIya.xml"),
-    Spec("shishupalavadham", "zizupAlavadham", "sa_mAgha-zizupAlavadha.xml"),
-    Spec("rtusamharam", "RtusaMhAram", "sa_kAlidAsa-RtusaMhAra.xml"),
-    Spec("shatakatrayam", "zatakatrayam", "sa_bhatRhari-zatakatraya.xml"),
-    Spec("bhattikavyam", "bhaTTikAvyam", "sa_bhaTTi-rAvaNavadha.xml"),
-    Spec("meghadutam-kale", "meghadUtam", "sa_kAlidAsa-meghadUta-edkale.xml"),
-    Spec("kokilasandesha", "kokilasaMdezaH", "sa_uddaNDa-kokilasaMdesa.xml"),
-    Spec("bodhicaryavatara", "bodhicAryAvatAraH", "sa_zAntideva-bodhicaryAvatAra.xml"),
-    Spec(
-        "saundaranandam", "saundaranandam", "sa_azvaghoSa-saundarAnanda-edmatsunami.xml"
-    ),
-    Spec("caurapancashika", "caurapaJcAzikA", "sa_bilhaNa-caurapaJcAzikA.xml"),
-    Spec("hamsadutam", "haMsadUtam", "sa_rUpagosvAmin-haMsadUta.xml"),
-    Spec("mukundamala", "mukundamAlA", "sa_kulazekhara-mukundamAlA-eddurgaprasad.xml"),
+    Spec("arthasastra", "arthazAstra", "sa_kauTilya-arthazAstra.xml"),
+    # Spec("amarushatakam", "amaruzakatam", "sa_amaru-amaruzataka.xml"),
+    # Spec("kumarasambhavam", "kumArasambhavam", "sa_kAlidAsa-kumArasaMbhava.xml"),
+    # Spec("raghuvamsham", "raghuvaMzam", "sa_kAlidAsa-raghuvaMza.xml"),
+    # Spec("kiratarjuniyam", "kirAtArjunIyam", "sa_bhAravi-kirAtArjunIya.xml"),
+    # Spec("shishupalavadham", "zizupAlavadham", "sa_mAgha-zizupAlavadha.xml"),
+    # Spec("rtusamharam", "RtusaMhAram", "sa_kAlidAsa-RtusaMhAra.xml"),
+    # Spec("shatakatrayam", "zatakatrayam", "sa_bhatRhari-zatakatraya.xml"),
+    # Spec("bhattikavyam", "bhaTTikAvyam", "sa_bhaTTi-rAvaNavadha.xml"),
+    # Spec("meghadutam-kale", "meghadUtam", "sa_kAlidAsa-meghadUta-edkale.xml"),
+    # Spec("kokilasandesha", "kokilasaMdezaH", "sa_uddaNDa-kokilasaMdesa.xml"),
+    # Spec("bodhicaryavatara", "bodhicAryAvatAraH", "sa_zAntideva-bodhicaryAvatAra.xml"),
+    # Spec(
+    #     "saundaranandam", "saundaranandam", "sa_azvaghoSa-saundarAnanda-edmatsunami.xml"
+    # ),
+    # Spec("caurapancashika", "caurapaJcAzikA", "sa_bilhaNa-caurapaJcAzikA.xml"),
+    # Spec("hamsadutam", "haMsadUtam", "sa_rUpagosvAmin-haMsadUta.xml"),
+    # Spec("mukundamala", "mukundamAlA", "sa_kulazekhara-mukundamAlA-eddurgaprasad.xml"),
 ]
 
 
@@ -59,6 +60,7 @@ NS = {
 
 def fetch_latest_data():
     """Fetch the latest data from our GitHub repo."""
+    return
     if not DATA_DIR.exists():
         subprocess.run(f"mkdir -p {DATA_DIR}", shell=True)
         subprocess.run(f"git clone --branch=main {REPO} {DATA_DIR}", shell=True)
@@ -168,7 +170,7 @@ def parse_sections(xml: ET.Element) -> list[Section]:
     if divs:
         # Text has one or more sections.
         for i, div in enumerate(body.findall("./div")):
-            section_slug = str(i + 1)
+            section_slug = div.attrib.get("n", str(i + 1))
             section = _make_section(div, section_slug)
             sections.append(section)
     else:
