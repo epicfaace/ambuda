@@ -32,4 +32,4 @@ fi
 # "npx concurrently" does not work on Docker, but ./node_modules/.bin/concurrently does.
 # We also need to add "--host=0.0.0.0" to "flask run" to allow the host to access the
 # website that is running from the Docker container.
-./node_modules/.bin/concurrently "flask run --host=0.0.0.0" "make css-dev" "make js-dev"
+/app/node_modules/.bin/concurrently "flask run --host=0.0.0.0" "make css-dev" "make js-dev"
